@@ -10,30 +10,29 @@ fi
 # Obtém o prefixo fornecido
 prefixo="$1"
 
-# Verifica se está rodando dentro da pasta samples
-if [ "$(basename "$PWD")" != "samples" ]; then
-    # Mensagem de erro se não estiver na pasta correta
-    echo "Erro: Este script deve ser executado dentro da pasta samples."
+# Verifica se a pasta script_sample_folder existe no diretório atual
+if [ ! -d "script_sample_folder" ]; then
+    echo "Erro: A pasta 'script_sample_folder' não foi encontrada no diretório atual."
     exit 1
 fi
 
-# Percorre todas as pastas dentro da script_sample_folder
-for pasta in ./script_sample_folder/*; do
+# Percorre todas as pastas dentro de script_sample_folder
+for pasta in script_sample_folder/*; do
     # Verifica se é um diretório
     if [ -d "$pasta" ]; then
-        # Obtém o nome da pasta sem a barra final
+        # Obtém o nome da pasta sem o caminho
         nome_da_pasta=$(basename "$pasta")
         
         # Define o novo nome da pasta com o prefixo
-        novo_nome="${prefixo}-${nome_da_pasta}"
+        novo_nome="script_sample_folder/${prefixo}-${nome_da_pasta}"
         
-        # Renomear a pasta
+        # Renomear a pasta (dentro de script_sample_folder)
         mv "$pasta" "$novo_nome"
         
-        # Mensagem de sucesso 
-        echo "Pasta renomeada de $nome_da_pasta para $novo_nome"
+        # Mensagem de sucesso
+        echo "Pasta renomeada de $nome_da_pasta para ${prefixo}-${nome_da_pasta}"
     fi
 done
 
-# Mensagem de sucesso 
-echo "Todas as pastas foram renomeadas com o prefixo '$prefixo'."
+# Mensagem de sucesso final
+echo "Todas as pastas em 'script_sample_folder' foram renomeadas com o prefixo '$prefixo'."
