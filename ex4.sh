@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Verifica se o argumento foi passado como 'true', caso contrário, assume 'false'
-apagar_tudo = ${1:-false}
+nome_script_argumento=${1:-false}
 
 # Verifica se esta dentro da pasta script_sample_folder
 if [ "$(basename "$PWD")" != "script_sample_folder" ]; then
@@ -13,14 +13,14 @@ fi
 for pasta in script_sample_folder/*; do
     # Verifica se é um diretório
     if [ -d "$pasta" ]; then
-        # Se apagar_tudo = true, apaga todos os diretórios
-        if [ "$apagar_tudo" == "true" ]; then
+        # Se argumento = true, apaga todos os diretórios
+        if [ "$nome_script_argumento" == "true" ]; then
             echo "A apagar o diretório $pasta..."
             rm -rf "$pasta"
         else
-            # Se o diretório não estiver vazio, apaga o conteúdo
+            # Apaga apenas os diretorios que contem conteudo
             if [ "$(ls "$pasta")" ]; then
-                echo "A apagar o conteúdo do diretório $pasta..."
+                echo "A apagar o diretorio $pasta com conteudo..."
                 rm -rf "$pasta"
             fi
         fi
