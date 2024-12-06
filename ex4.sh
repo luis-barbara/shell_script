@@ -9,6 +9,12 @@ if [ "$(basename "$PWD")" != "script_sample_folder" ]; then
     exit 1
 fi
 
+# Verifica se o argumento é válido
+if [[ "$nome_script_argumento" != "true" && "$nome_script_argumento" != "false" ]]; then
+    echo "Erro: O argumento deve ser 'true' ou 'false'."
+    exit 1
+fi
+
 # Percorre todos os diretórios no script_sample_folder
 for pasta in script_sample_folder/*; do
     # Verifica se é um diretório
@@ -19,7 +25,7 @@ for pasta in script_sample_folder/*; do
             rm -rf "$pasta"
         else
             # Apaga apenas os diretorios que contem conteudo
-            if [ "$(ls "$pasta")" ]; then
+            if [ "$(echo $pasta/*)" ]; then
                 echo "A apagar o diretorio $pasta com conteudo..."
                 rm -rf "$pasta"
             fi
